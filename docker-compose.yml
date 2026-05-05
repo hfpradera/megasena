@@ -1,0 +1,7 @@
+services:
+  mega:
+    build: .
+    container_name: mega-flask
+    ports:
+      - "3003:3003"
+    restart: always
