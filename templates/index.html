@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simulador Mega-Sena</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem auto; max-width: 900px; padding: 0 1rem; }
+      h1, h2 { color: #0a7d42; }
+      .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+      code { background: #f4f4f4; padding: .2rem .4rem; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Simulador da Mega-Sena</h1>
+    <p>Projeto para simular combinações com filtros básicos e análise de histórico.</p>
+
+    <div class="card">
+      <h2>Jogos sugeridos</h2>
+      <ul>
+        {% for jogo in jogos %}
+          <li><code>{{ jogo|join(' - ') }}</code></li>
+        {% else %}
+          <li>Nenhum jogo gerado.</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Últimos concursos no histórico</h2>
+      <ul>
+        {% for concurso in ultimos %}
+          <li>#{{ concurso.numero }} → <code>{{ concurso.dezenas|join(' - ') }}</code></li>
+        {% else %}
+          <li>Sem histórico carregado em <code>data/resultadosMega.txt</code>.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>
