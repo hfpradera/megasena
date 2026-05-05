@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mega Sena - Simulação Estatística</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 2rem auto; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+    .small { color: #666; font-size: 0.95rem; }
+    code { background: #f3f3f3; padding: 0.1rem 0.3rem; }
+  </style>
+</head>
+<body>
+  <h1>Mega-Sena: Gerador por Simulação Estatística</h1>
+  <p class="small">Esta aplicação não prevê resultados. Ela apenas simula jogos com filtros estatísticos baseados no histórico.</p>
+
+  <div class="card">
+    <form method="post">
+      <label for="orcamento">Orçamento (R$):</label>
+      <input id="orcamento" name="orcamento" type="number" step="0.01" min="1" value="{{ orcamento }}" required>
+      <button type="submit">Gerar jogos</button>
+    </form>
+    <p class="small">Concursos no histórico carregado: <strong>{{ historico_total }}</strong></p>
+  </div>
+
+  {% if estrategia %}
+  <div class="card">
+    <h2>Estratégia escolhida: {{ estrategia.nome }}</h2>
+    <ul>
+      <li>Dezenas por jogo: <strong>{{ estrategia.dezenas }}</strong></li>
+      <li>Quantidade de jogos alvo: <strong>{{ estrategia.qtd }}</strong></li>
+      <li>Aprendizado dos filtros (% histórico): <strong>{{ estrategia.percentual }}%</strong></li>
+      <li>Mínimo de acerto em filtros: <strong>{{ estrategia.perc_acerto }}%</strong></li>
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if jogos %}
+    {% for item in jogos %}
+      <div class="card">
+        <h3>Jogo {{ loop.index }}</h3>
+        <p><code>{{ item.jogo | join(' - ') }}</code></p>
+        <p class="small">Filtros aprovados: {{ item.filtros_ok | join(', ') }}</p>
+      </div>
+    {% endfor %}
+  {% elif estrategia %}
+    <p>Nenhum jogo válido encontrado nos limites atuais. Tente novo orçamento para outra estratégia.</p>
+  {% endif %}
+</body>
+</html>
